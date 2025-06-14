@@ -1,3 +1,4 @@
+// Crayon Colors
 /obj/item/pen/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"
@@ -34,6 +35,18 @@
 	shadeColour = "#810CFF"
 	colourName = "purple"
 
+/obj/item/pen/crayon/black
+	icon_state = "crayonblack"
+	colour = "#000000"
+	shadeColour = "#1C1C1C"
+	colourName = "black"
+
+/obj/item/pen/crayon/white
+	icon_state = "crayonwhite"
+	colour = "#FFFFFF"
+	shadeColour = "#B6B6B6"
+	colourName = "white"
+
 /obj/item/pen/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
@@ -43,17 +56,6 @@
 	uses = 0
 	grindable = FALSE
 
-/obj/item/pen/crayon/mime/attack_self(mob/living/user as mob) //inversion
-	if(colour != "#FFFFFF" && shadeColour != "#000000")
-		colour = "#FFFFFF"
-		shadeColour = "#000000"
-		to_chat(user, "You will now draw in white and black with this crayon.")
-	else
-		colour = "#000000"
-		shadeColour = "#FFFFFF"
-		to_chat(user, "You will now draw in black and white with this crayon.")
-	return
-
 /obj/item/pen/crayon/rainbow
 	icon_state = "crayonrainbow"
 	colour = "#FFF000"
@@ -62,11 +64,7 @@
 	uses = 0
 	grindable = FALSE
 
-/obj/item/pen/crayon/rainbow/attack_self(mob/living/user as mob)
-	colour = input(user, "Please select the main color.", "Crayon color") as color
-	shadeColour = input(user, "Please select the shade color.", "Crayon color") as color
-	return
-
+// Crayon Logic
 /obj/item/pen/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
 	if(istype(target,/turf/simulated/floor))
@@ -110,3 +108,21 @@
 				qdel(src)
 	else
 		..()
+
+// Mime Crayon Logic
+/obj/item/pen/crayon/mime/attack_self(mob/living/user as mob) //inversion
+	if(colour != "#FFFFFF" && shadeColour != "#000000")
+		colour = "#FFFFFF"
+		shadeColour = "#000000"
+		to_chat(user, "You will now draw in white and black with this crayon.")
+	else
+		colour = "#000000"
+		shadeColour = "#FFFFFF"
+		to_chat(user, "You will now draw in black and white with this crayon.")
+	return
+
+// Rainbow Crayon Logic
+/obj/item/pen/crayon/rainbow/attack_self(mob/living/user as mob)
+	colour = input(user, "Please select the main color.", "Crayon color") as color
+	shadeColour = input(user, "Please select the shade color.", "Crayon color") as color
+	return
